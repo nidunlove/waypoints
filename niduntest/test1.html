@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Scroll bar enabled - fullPage.js</title>
+	<meta name="author" content="Alvaro Trigo Lopez" />
+	<meta name="description" content="fullPage full-screen navigation and sections control menu." />
+	<meta name="keywords"  content="fullpage,jquery,demo,scrollbar,scroll,bar,fullscreen,navigation,control arrows, dots" />
+	<meta name="Resource-type" content="Document" />
+	
+	<script src="jquery.min.js"></script>
+	
+
+	<script src="../lib/jquery.waypoints.min.js"></script>
+	<script src="../lib/shortcuts/sticky.min.js"></script>
+	<script src="../lib/shortcuts/infinite.min.js"></script>
+	<script src="../lib/shortcuts/inview.min.js"></script>
+
+	
+	<style type="text/css">
+		#nav {
+		  /* //position:fixed;
+		  //top:0; */
+		}
+
+.stuck {
+  position:fixed;
+  top:0;
+}
+
+		#overflow-scroll {
+  overflow:scroll;
+  height:300px;
+  background:#aaa;
+}
+
+#context-example {
+  background:#555;
+  color:#fff;
+  height:600px;
+  margin-top:150px;
+}
+
+
+.infinite-container {
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+  }
+
+  .infinite-item {
+    height:500px;
+  }
+	</style>
+
+
+</head>
+<body>
+	
+<div style="height: 2000px;">
+
+	
+
+		<div class="infinite-container">
+		  <div class="infinite-item">infinite-item1</div>
+		  <ul id="nav">
+			<li>nacv1</li>
+			<li>nacv2</li>
+			<li>nacv3</li>
+		</ul>
+		  <div class="infinite-item">infinite-item2</div>
+		  <div id="options-only">options-only111111</div>
+		  <div class="infinite-item">infinite-item3</div>
+		  infinite-itembbbb
+		</div>
+		<a id="more" class="infinite-more-link" href="/next/page">More</a>
+
+		</div>
+
+		<div id="overflow-scroll">
+		  <div id="context-example">I am a waypoint with a custom context, the "#overflow-scroll" div.</div>
+		</div>
+
+
+<script type="text/javascript">
+		var sticky = new Waypoint.Sticky({
+		  element: $('#nav')
+		});
+
+		var infinite = new Waypoint.Infinite({
+		  element: $('.infinite-container')[0]
+		});
+
+		var inview = new Waypoint.Inview({
+		  element: $('#more'),
+		  enter: function(direction) {
+		  	//alert("111"+direction);
+		    notify(' inview111 Enter triggered with direction ' + direction)
+		  },
+		  entered: function(direction) {
+		  	//alert("2222"+direction);
+		    notify(' inview222 Entered triggered with direction ' + direction)
+		  },
+		  exit: function(direction) {
+		  	//alert("333"+direction);
+		    notify(' inview3333 Exit triggered with direction ' + direction)
+		  },
+		  exited: function(direction) {
+		  	//alert("4444"+direction);
+		   notify(' inview4444 Exited triggered with direction ' + direction)
+		  }
+		});
+
+
+		var waypoint = new Waypoint({
+		  element: document.getElementById('context-example'),
+		  handler: function(direction) {
+		  	//alert(direction);
+		    notify('new Waypoint Context example triggered')
+		  },
+		  context: document.getElementById('overflow-scroll')
+		});
+
+		/*var waypoints = $('#options-only').waypoint({
+		  handler: function(direction) {
+		  	//alert(direction);
+		    notify(this.element.id + ' hit')
+		  }
+		});*/
+
+		var waypoints = $('#options-only').waypoint(function(direction) {
+  notify(this.element.id + ' hit 25% from top of window') 
+}, {
+  offset: '25%'
+})
+
+
+function notify(msg){
+	$(".msg_msg").remove();
+	$("body").append("<span class='msg_msg' style='position: fixed; top: 10%;right:0;'>"+msg+"</span>");
+	
+}
+	</script>
+</body>
+</html>
